@@ -11,27 +11,39 @@
     <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;700&display=swap" rel="stylesheet">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom CSS -->
+
 </head>
 <body class="flex min-h-screen bg-gradient-to-br from-gray-100 to-gray-200">
     <!-- Splash Screen -->
-    <div id="splashScreen" class="fixed inset-0 flex flex-col items-center justify-center bg-gray-50 z-50 transition-opacity duration-700 ease-out">
-        <svg id="splashLogo" class="h-32 w-auto mb-4 text-gray-800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
+    <div id="splashScreen">
+        <!-- OPTION 1: Use your own SVG logo code directly -->
+        <!-- Replace the content inside this SVG tag with your SVG code. -->
+        <!-- Ensure your SVG has a viewBox attribute for proper scaling. -->
+        <svg id="splashLogo" class="h-32 w-auto mb-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
+            <!-- Replace this path data with the path data from YOUR SVG logo -->
             <path d="M576 64V448c0 35.35-28.65 64-64 64H64c-35.35 0-64-28.65-64-64V64C0 28.65 28.65 0 64 0h448C547.35 0 576 28.65 576 64zM288 128H128v256h160V128zM448 128H352v256h96V128z"/>
         </svg>
+
+        <!-- OPTION 2: Use an image (PNG, JPG, GIF) for your logo -->
+        <!-- Uncomment the line below and replace "YOUR_LOGO_IMAGE_URL_HERE" with your image's URL. -->
+        <!-- Make sure to comment out or remove the <svg> tag above if you use this option. -->
+        <!-- <img id="splashLogo" src="YOUR_LOGO_IMAGE_URL_HERE" alt="Your Company Logo" class="h-32 w-auto mb-4 object-contain"> -->
+
         <h1 id="splashTitle" class="text-4xl font-extrabold text-gray-900 text-center">Library System</h1>
         <p id="splashLoadingText" class="text-lg text-gray-700 mt-4">Loading your library...</p>
-        <div class="spinner mt-8 border-t-4 border-b-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
+        <div class="spinner mt-8"></div>
     </div>
 
-    <div id="loadingOverlay" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-40 hidden">
-        <div class="spinner border-t-4 border-b-4 border-blue-500 rounded-full w-16 h-16 animate-spin"></div>
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
     </div>
 
-    <div id="messageBox" class="fixed top-4 right-4 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300 ease-out"></div>
+    <div id="messageBox" class="message-box"></div>
 
     <!-- Custom Confirmation Modal -->
-    <div id="confirmationModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50 hidden">
-        <div class="bg-white p-8 rounded-lg shadow-xl max-w-sm w-full text-center">
+    <div id="confirmationModal" class="custom-modal-overlay">
+        <div class="custom-modal-content">
             <h3 id="confirmationModalTitle" class="text-xl font-bold text-gray-800 mb-4">Confirm Action</h3>
             <p id="confirmationModalMessage" class="text-gray-700 mb-6">Are you sure you want to proceed?</p>
             <div class="flex justify-center space-x-4">
@@ -45,9 +57,19 @@
     <aside class="fixed top-0 left-0 h-full w-64 bg-gray-900 p-4 shadow-lg flex flex-col overflow-y-auto rounded-r-xl z-10">
         <!-- Logo and Title -->
         <div class="flex flex-col items-center mb-8">
+            <!-- OPTION 1: Use your own SVG logo code directly for sidebar -->
+            <!-- Replace the content inside this SVG tag with your SVG code. -->
+            <!-- Ensure your SVG has a viewBox attribute for proper scaling. -->
             <svg class="h-16 w-auto text-white mb-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
+                <!-- Replace this path data with the path data from YOUR SVG logo -->
                 <path d="M576 64V448c0 35.35-28.65 64-64 64H64c-35.35 0-64-28.65-64-64V64C0 28.65 28.65 0 64 0h448C547.35 0 576 28.65 576 64zM288 128H128v256h160V128zM448 128H352v256h96V128z"/>
             </svg>
+
+            <!-- OPTION 2: Use an image (PNG, JPG, GIF) for your logo in sidebar -->
+            <!-- Uncomment the line below and replace "YOUR_LOGO_IMAGE_URL_HERE" with your image's URL. -->
+            <!-- Make sure to comment out or remove the <svg> tag above if you use this option. -->
+            <!-- <img src="YOUR_LOGO_IMAGE_URL_HERE" alt="Your Company Logo" class="h-16 w-auto mb-4 object-contain"> -->
+
             <h1 class="text-2xl font-extrabold text-gray-100 text-center">Library System</h1>
         </div>
         
@@ -117,16 +139,13 @@
                             <label for="customerSearchInput" class="block text-sm font-medium text-gray-700 mb-1">Search Customer by Name or ID</label>
                             <div class="flex">
                                 <input type="text" id="customerSearchInput" name="customerSearchInput" placeholder="Enter name or ID"
-                                       class="flex-grow px-4 py-2 border border-gray-300 rounded-l-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm">
-                                <button type="button" id="searchCustomerDropdownBtn"
-                                        class="px-4 py-2 bg-gray-700 text-white rounded-r-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 transition duration-150 ease-in-out">
-                                    <i class="fas fa-search"></i> <span class="sr-only">Search Customer</span>
-                                </button>
+                                       class="flex-grow px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm">
+                                <!-- Removed searchCustomerDropdownBtn as its functionality is covered by input event -->
                             </div>
                         </div>
                         <div>
                             <label for="customerSelectDropdown" class="block text-sm font-medium text-gray-700 mb-1">Choose your Name</label>
-                            <select id="customerSelectDropdown" name="customerSelectDropdown" required
+                            <select id="customerSelectDropdown" name="customerSelectDropdown"
                                     class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm">
                                 <option value="">-- Select Customer --</option>
                                 <!-- Customer users will be dynamically inserted here -->
@@ -146,7 +165,7 @@
             </div>
 
             <!-- Dashboard Section (Admin Only) -->
-            <div id="dashboard-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner admin-only hidden">
+            <div id="dashboard-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner admin-only">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Dashboard Overview</h2>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center mb-8">
                     <div class="bg-white p-6 rounded-lg shadow-md">
@@ -178,7 +197,7 @@
             </div>
 
             <!-- Catalog Section (Admin Only) -->
-            <div id="catalog-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner admin-only hidden">
+            <div id="catalog-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner admin-only">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Book Catalog</h2>
                 
                 <!-- Add Book Form -->
@@ -243,10 +262,6 @@
                             <label for="bookCoverUrl" class="block text-sm font-medium text-gray-700 mb-1">Book Cover URL (Optional)</label>
                             <input type="url" id="bookCoverUrl" name="bookCoverUrl" placeholder="Paste image URL (e.g., https://example.com/cover.jpg)"
                                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm">
-                            <p class="text-center text-gray-500 my-2">-- OR --</p>
-                            <label for="bookCoverFile" class="block text-sm font-medium text-gray-700 mb-1">Upload Book Cover (Optional)</label>
-                            <input type="file" id="bookCoverFile" name="bookCoverFile" accept="image/*"
-                                   class="mt-1 block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-700 file:text-white hover:file:bg-gray-800">
                             <img id="bookCoverPreview" src="" alt="Cover Preview" class="mt-2 w-24 h-36 object-cover rounded-md shadow-sm border border-gray-300 hidden">
                         </div>
                         <div class="flex items-center mt-6 md:mt-0">
@@ -310,7 +325,7 @@
             </div>
 
             <!-- Issue/Return Section (Admin Only) -->
-            <div id="issue-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner admin-only hidden">
+            <div id="issue-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner admin-only">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Issue and Return Books</h2>
 
                 <div class="mb-8 p-6 bg-gray-200 rounded-lg shadow-sm">
@@ -357,76 +372,73 @@
                         <div id="selectedUserDisplay" class="md:col-span-2 p-4 bg-white rounded-md shadow-sm border border-gray-200 hidden">
                             <p class="text-gray-800 font-semibold mb-1">Selected User:</p>
                             <p class="text-gray-700"><strong class="font-medium">Name:</strong> <span id="selectedUserName"></span></p>
-                            <p class="text-gray-700"><strong class="font-medium">Type/Class:</strong> <span id="selectedUserClass"></span></p>
+                            <p class="text-gray-700"><strong class="font-medium">Class:</strong> <span id="selectedUserClass"></span></p>
                         </div>
-                        <div class="md:col-span-2 flex justify-center mt-6">
+                        <div class="md:col-span-2 flex justify-center">
                             <button type="submit" id="issueBookSubmitBtn" disabled
-                                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed">
-                                <i class="fas fa-plus-circle mr-3"></i> Issue Book
+                                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-700 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 transition duration-150 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <i class="fas fa-hand-holding-usd mr-3"></i>
+                                Issue Book
                             </button>
                         </div>
                     </form>
                 </div>
 
-                <div class="mb-8 p-6 bg-gray-200 rounded-lg shadow-sm">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Currently Issued Books</h3>
-                    <div id="issuedBooksList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Issued book cards will be dynamically inserted here -->
-                    </div>
-                    <p id="noIssuedBooksMessage" class="text-center text-gray-500 mt-8 text-lg hidden">No books are currently issued.</p>
+                <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Currently Issued Books</h3>
+                <div id="issuedBooksList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Issued book cards will be dynamically inserted here -->
                 </div>
+                <p id="noIssuedBooksMessage" class="text-center text-gray-500 mt-8 text-lg hidden">No books currently issued.</p>
             </div>
 
             <!-- History Section (Admin Only) -->
-            <div id="history-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner admin-only hidden">
+            <div id="history-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner admin-only">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Transaction History</h2>
-
                 <div class="mb-8 p-6 bg-gray-200 rounded-lg shadow-sm">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Filter History by User</h3>
-                    <div class="flex justify-center">
-                        <input type="text" id="historyUserIdSearch" placeholder="Enter User ID to search history"
-                               class="flex-grow max-w-md px-4 py-2 border border-gray-300 rounded-l-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Search History by User</h3>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input type="text" id="historyUserIdSearch" name="historyUserIdSearch" placeholder="Enter User ID to search"
+                               class="flex-grow px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm">
                         <button type="button" id="searchHistoryBtn"
-                                class="px-4 py-2 bg-gray-700 text-white rounded-r-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 transition duration-150 ease-in-out">
-                            <i class="fas fa-search"></i> <span class="sr-only">Search History</span>
+                                class="px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 transition duration-150 ease-in-out">
+                            <i class="fas fa-search mr-2"></i> Search History
                         </button>
                     </div>
                 </div>
-
-                <div class="overflow-x-auto">
+                <div id="historyTableContainer" class="overflow-x-auto">
                     <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
                         <thead>
                             <tr>
-                                <th class="px-4 py-2 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Date</th>
-                                <th class="px-4 py-2 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Type</th>
-                                <th class="px-4 py-2 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Book Title</th>
-                                <th class="px-4 py-2 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">User</th>
+                                <th class="px-4 py-2 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Book Name</th>
+                                <th class="px-4 py-2 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">User Name</th>
+                                <th class="px-4 py-2 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Issue Date</th>
+                                <th class="px-4 py-2 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Return Date</th>
                                 <th class="px-4 py-2 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Librarian</th>
                             </tr>
                         </thead>
-                        <tbody id="historyTableBody" class="divide-y divide-gray-100">
-                            <!-- History entries will be dynamically inserted here -->
+                        <tbody id="historyTableBody">
+                            <!-- History table rows will be dynamically inserted here -->
                         </tbody>
                     </table>
                 </div>
-                <p id="noHistoryMessage" class="text-center text-gray-500 mt-8 text-lg hidden">No history records found.</p>
+                <p id="noHistoryMessage" class="text-center text-gray-500 mt-8 text-lg hidden">No history entries yet.</p>
             </div>
 
             <!-- User Management Section (Admin Only) -->
-            <div id="user-management-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner admin-only hidden">
+            <div id="user-management-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner admin-only">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">User Management</h2>
 
-                <div class="mb-10 p-6 bg-gray-200 rounded-lg shadow-sm">
+                <div class="mb-8 p-6 bg-gray-200 rounded-lg shadow-sm">
                     <h3 id="userFormTitle" class="text-xl font-bold text-gray-800 mb-4 text-center">Add New User</h3>
                     <form id="addUserForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label for="newUserId" class="block text-sm font-medium text-gray-700 mb-1">User ID (Optional, auto-generated if empty)</label>
-                            <input type="text" id="newUserId" name="newUserId" placeholder="Enter unique user ID"
+                            <label for="newUserId" class="block text-sm font-medium text-gray-700 mb-1">User ID (Optional)</label>
+                            <input type="text" id="newUserId" name="newUserId" placeholder="Leave empty for auto-generate"
                                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm">
                         </div>
                         <div>
-                            <label for="newUserName" class="block text-sm font-medium text-gray-700 mb-1">User Name</label>
-                            <input type="text" id="newUserName" name="newUserName" placeholder="Enter user's name" required
+                            <label for="newUserName" class="block text-sm font-medium text-gray-700 mb-1">User Full Name</label>
+                            <input type="text" id="newUserName" name="newUserName" placeholder="Enter user's full name" required
                                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm">
                         </div>
                         <div>
@@ -439,17 +451,16 @@
                                 <option value="Admin">Admin</option>
                             </select>
                         </div>
-                        <div id="newUserClassGroup" class="hidden">
-                            <label for="newUserClass" class="block text-sm font-medium text-gray-700 mb-1">Class (for Customers)</label>
+                        <div id="newUserClassGroup">
+                            <label for="newUserClass" class="block text-sm font-medium text-gray-700 mb-1">User Class (1-6)</label>
                             <select id="newUserClass" name="newUserClass"
                                     class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm">
-                                <option value="">-- Select Class (Optional) --</option>
-                                <!-- Classes will be dynamically populated here (1-6) -->
+                                <!-- Options 1-6 will be generated by JS -->
                             </select>
                         </div>
                         <div class="md:col-span-2 flex justify-center space-x-4">
                             <button type="submit" id="userFormSubmitBtn"
-                                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-800 hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700 transition duration-150 ease-in-out transform hover:scale-105">
+                                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-800 hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700 transition duration-150 ease-in-out transform hover:scale-105 w-full sm:w-auto">
                                 <i class="fas fa-user-plus mr-3"></i>
                                 Add User
                             </button>
@@ -462,43 +473,41 @@
                     </form>
                 </div>
 
-                <div class="mb-8 p-6 bg-gray-200 rounded-lg shadow-sm">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Customer Users</h3>
-                    <div id="customerUserList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Customer user cards/lists will be dynamically inserted here by class -->
-                    </div>
-                    <p id="noCustomerUsersMessage" class="text-center text-gray-500 mt-8 text-lg hidden">No customer users registered yet.</p>
+                <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Registered Customers</h3>
+                <div id="customerUserList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                    <!-- Customer user cards will be dynamically inserted here -->
                 </div>
-
-                <div class="mb-8 p-6 bg-gray-200 rounded-lg shadow-sm">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Usthad Users</h3>
-                    <div id="usthadUsersContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <p id="noCustomerUsersMessage" class="text-center text-gray-500 mt-4 text-lg hidden">No Customer users registered yet.</p>
+                
+                <div id="usthadList" class="mt-8">
+                    <h4 class="text-lg font-bold text-gray-800 mb-4 text-center">Usthad Users</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="usthadUsersContainer">
                         <!-- Usthad user cards will be dynamically inserted here -->
                     </div>
-                    <p id="noUsthadMessage" class="text-center text-gray-500 mt-8 text-lg hidden">No Usthad users registered yet.</p>
+                    <p id="noUsthadMessage" class="text-center text-gray-500 mt-4 text-lg hidden">No Usthad users registered yet.</p>
                 </div>
             </div>
 
             <!-- Librarian Section (Admin Only) -->
-            <div id="librarian-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner admin-only hidden">
+            <div id="librarian-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner admin-only">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Librarian Management</h2>
-
-                <div class="mb-10 p-6 bg-gray-200 rounded-lg shadow-sm">
+                
+                <div class="mb-8 p-6 bg-gray-200 rounded-lg shadow-sm">
                     <h3 id="librarianFormTitle" class="text-xl font-bold text-gray-800 mb-4 text-center">Add New Librarian</h3>
                     <form id="addLibrarianForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label for="newLibrarianName" class="block text-sm font-medium text-gray-700 mb-1">Librarian Name</label>
-                            <input type="text" id="newLibrarianName" name="newLibrarianName" placeholder="Enter librarian's name" required
+                            <label for="newLibrarianName" class="block text-sm font-medium text-gray-700 mb-1">Librarian Full Name</label>
+                            <input type="text" id="newLibrarianName" name="newLibrarianName" placeholder="Enter librarian's full name" required
                                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm">
                         </div>
                         <div>
-                            <label for="newLibrarianPosition" class="block text-sm font-medium text-gray-700 mb-1">Position</label>
+                            <label for="newLibrarianPosition" class="block text-sm font-medium text-gray-700 mb-1">Librarian Position</label>
                             <input type="text" id="newLibrarianPosition" name="newLibrarianPosition" placeholder="e.g., Head Librarian" required
                                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm">
                         </div>
                         <div class="md:col-span-2 flex justify-center space-x-4">
                             <button type="submit" id="librarianFormSubmitBtn"
-                                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-800 hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700 transition duration-150 ease-in-out transform hover:scale-105">
+                                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-800 hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700 transition duration-150 ease-in-out transform hover:scale-105 w-full sm:w-auto">
                                 <i class="fas fa-user-plus mr-3"></i>
                                 Add Librarian
                             </button>
@@ -511,46 +520,49 @@
                     </form>
                 </div>
 
-                <div class="mb-8 p-6 bg-gray-200 rounded-lg shadow-sm">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Librarians List</h3>
-                    <div id="librarianList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Librarian cards will be dynamically inserted here -->
-                    </div>
-                    <p id="noLibrariansMessage" class="text-center text-gray-500 mt-8 text-lg hidden">No librarians registered yet.</p>
+                <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Registered Librarians</h3>
+                <div id="librarianList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Librarian cards will be dynamically inserted here -->
                 </div>
+                <p id="noLibrariansMessage" class="text-center text-gray-500 mt-8 text-lg hidden">No librarians registered yet.</p>
             </div>
 
             <!-- Status Section -->
-            <div id="status-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner hidden">
+            <div id="status-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">System Status</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white p-6 rounded-lg shadow-md">
-                        <p class="text-lg font-semibold text-gray-800">Database Status:</p>
-                        <p id="dbStatus" class="text-xl font-bold text-red-600 mt-2">Disconnected</p>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Database Connection</h3>
+                        <p id="dbStatus" class="text-gray-700">Checking...</p>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-md">
-                        <p class="text-lg font-semibold text-gray-800">Authentication Status:</p>
-                        <p id="authStatus" class="text-xl font-bold text-red-600 mt-2">Logged Out</p>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">User Authentication</h3>
+                        <p id="authStatus" class="text-gray-700">Checking...</p>
                     </div>
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <p class="text-lg font-semibold text-gray-800">Logged In User ID:</p>
-                        <p id="loggedInUserIdStatus" class="text-xl font-bold text-gray-800 mt-2">N/A</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md md:col-span-2">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Current Logged-in User ID</h3>
+                        <p id="loggedInUserIdStatus" class="text-gray-700">Not available</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Customer Section (Customer/Usthad Only) -->
-            <div id="customer-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner customer-only hidden">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Your Library</h2>
-                <p id="currentCustomerNameDisplay" class="text-lg text-gray-700 text-center mb-6">Welcome!</p>
+            <!-- Customer Section (Customer Only) -->
+            <div id="customer-section" class="section-content p-6 bg-gray-100 rounded-lg shadow-inner customer-only">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Customer Page</h2>
 
+                <!-- Customer's Name Display -->
+                <div class="mb-8 p-6 bg-gray-200 rounded-lg shadow-sm text-center">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Welcome, <span id="currentCustomerNameDisplay" class="text-blue-700">Customer</span>!</h3>
+                </div>
+
+                <!-- Customer Catalog Filters -->
                 <div class="mb-8 p-6 bg-gray-200 rounded-lg shadow-sm">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Find Books</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Filter Books</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="customerBookSearchInput" class="block text-sm font-medium text-gray-700 mb-1">Search by Title, Author, ISBN, or Catalog No.</label>
-                            <input type="text" id="customerBookSearchInput" placeholder="Search books..."
-                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm">
+                            <label for="customerBookSearchInput" class="block text-sm font-medium text-gray-700 mb-1">Search (Title/ISBN/Catalog)</label>
+                            <input type="text" id="customerBookSearchInput" placeholder="Search by title, ISBN, or catalog number"
+                                   class="flex-grow px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm">
                         </div>
                         <div>
                             <label for="customerAuthorFilter" class="block text-sm font-medium text-gray-700 mb-1">Author</label>
@@ -571,7 +583,7 @@
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm">
                                 <option value="">All Categories</option>
                                 <!-- Categories will be dynamically populated here -->
-                            </select>
+                            </option>
                         </div>
                     </div>
                     <div class="flex justify-center mt-6">
@@ -582,18 +594,16 @@
                     </div>
                 </div>
 
-                <div id="customerBookList" class="space-y-8">
-                    <!-- Customer book cards will be dynamically inserted here by category -->
+                <div id="customerBookList">
+                    <!-- Customer view book cards will be dynamically inserted here by category -->
                 </div>
-                <p id="noCustomerBooksMessage" class="text-center text-gray-500 mt-8 text-lg hidden">No books found matching your criteria.</p>
+                <p id="noCustomerBooksMessage" class="text-center text-gray-500 mt-8 text-lg hidden">No matching books available.</p>
             </div>
 
         </div>
     </main>
+<script src="script.js" type="module"></script>
 
-    <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Your custom script -->
-    <script src="script.js"></script>
+
 </body>
 </html>
