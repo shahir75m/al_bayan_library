@@ -14,7 +14,7 @@ async function appendBookToSheet(book) {
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: process.env.GOOGLE_SHEET_ID,
-    range: 'Sheet1!A1',
+    range: 'Sheet1!A1', // Appends to the first available row in Sheet1
     valueInputOption: 'RAW',
     resource: {
       values: [[title, author, isbn, catalogNumber, publishingYear, publisher, bookPrice, category, totalCopies, new Date().toLocaleDateString()]]
