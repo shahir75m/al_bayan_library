@@ -1,4 +1,3 @@
-
 /* Custom styles for Alegreya font */
 body {
     font-family: 'Alegreya', serif;
@@ -191,4 +190,3 @@ aside::-webkit-scrollbar-thumb:hover {
     from { opacity: 0; }
     to { opacity: 1; }
 }
-
